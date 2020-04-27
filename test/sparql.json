@@ -1,0 +1,81 @@
+{
+  "queryType": "SELECT",
+  "variables": [
+    {
+      "termType": "Wildcard",
+      "value": "*"
+    }
+  ],
+  "where": [
+    {
+      "type": "bgp",
+      "triples": [
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "shape"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+          },
+          "object": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#Shape"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "shape"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://www.w3.org/2003/01/geo/wgs84_pos#lat"
+          },
+          "object": {
+            "termType": "Variable",
+            "value": "shape_pt_lat"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "shape"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://www.w3.org/2003/01/geo/wgs84_pos#long"
+          },
+          "object": {
+            "termType": "Variable",
+            "value": "shape_pt_lon"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "shape"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#pointSequence"
+          },
+          "object": {
+            "termType": "Variable",
+            "value": "shape_pt_sequence"
+          }
+        }
+      ]
+    }
+  ],
+  "type": "query",
+  "prefixes": {
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "gtfs": "http://vocab.gtfs.org/terms#",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "dct": "http://purl.org/dc/terms/"
+  }
+}

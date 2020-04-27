@@ -6,12 +6,15 @@ class Sparql:
         self.rawQuery = ""
         self.parsedQuery = {}
         self.uris = {}
+        self.__readQuery()
+        self.__readParseQuery()
+        self.__getUrisFromQuery()
 
     def __readQuery(self):
         f = open(self.path, 'r', encoding='utf-8')
         self.rawQuery = f
         
-    def __parseQuery(self):
+    def __readParseQuery(self):
         parsedQuery = bash.parseSparqlQuery(self.path)
         self.parsedQuery = parsedQuery
 
@@ -22,14 +25,14 @@ class Sparql:
                 for tp in el['patterns']:
                     if('patterns' in tp.keys()):
                         for tp1 in tp['patterns']:
-                            result.update(self.extractTriplePatternUris(result, tp1))
+                            result.update(self.__extractTriplePatternUris(result, tp1))
                     else:
-                        result.update(self.extractTriplePatternUris(result, tp))
+                        result.update(self.__extractTriplePatternUris(result, tp))
             else:
-                result.update(self.extractTriplePatternUris(result, el))
+                result.update(self.__extractTriplePatternUris(result, el))
         self.uris = result
 
-    def extractTriplePatternUris(self, result, el):
+    def __extractTriplePatternUris(self, result, el):
         if('triples' in el.keys()):
             for tm in el['triples']:
                 subject = tm['subject']['value']

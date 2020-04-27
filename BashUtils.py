@@ -1,6 +1,10 @@
 import os
+import json
+
 def parseSparqlQuery(path):
-    result = {}
-    os.system("")
-    return result
-    
+    try:
+        os.system("bash bash/sparqlQueryParser.sh %s"%(str(path)))
+        result = json.loads(open('test/sparql.json', encoding='utf-8').read())
+        return result
+    except:
+        raise Exception('Invalid query!')
