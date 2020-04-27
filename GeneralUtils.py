@@ -42,3 +42,7 @@ def cleanColPattern(columns):
     for col in columns:
         result.append(str(col)[2:-1])
     return result
+def getLastElementFromUri(uri):
+    result = str(uri).split("/")[-1]
+    result = result.replace("#", "")
+    return result

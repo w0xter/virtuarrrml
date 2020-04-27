@@ -10,6 +10,7 @@ class Yarrrml:
         self.simplifiyedYarrrml= {}
         self.__readYarrrml()
         self.__substitutePrefixes()
+        self.__fromSourcesToTables()
     def __readYarrrml(self):
         f = open(self.path, 'r', encoding='utf-8')
         self.yarrrml = yaml.load(f, Loader=yaml.FullLoader)
@@ -139,4 +140,9 @@ class Yarrrml:
                 if(joinReferences['outerRef'] in utils.getColPatterns(po)):
                     #print('Hay que añadir a: \n' + str(po))
                     storedTm[tmName]['po'].append(po)
-        return storedTm        
+        return storedTm
+
+    def __fromSourcesToTables(self):
+        for tm in self.yarrrml["mappings"]:
+            source = self.yarrrml["mappings"][tm]["sources"][0][0].split("/")[-1].replace(".csv~csv","")
+            self.yarrrml["mappings"][tm]["sources"] = [{"table": source.upper()}]

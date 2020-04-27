@@ -1,11 +1,13 @@
 from YarrrmlUtils import Yarrrml
-from SparqlUtils import Sparql 
+from SparqlUtils import Sparql
+from SqlUtils import Sql
 import json
 def main():
     query = Sparql('./test/query.rq')
     mapping  = Yarrrml('./test/mapping.yaml')
     mapping.simplifyMappingAccordingToQuery(query.uris)
-    print(json.dumps(query.uris, indent=2))
-    print(json.dumps(mapping.simplifiyedYarrrml, indent=2))
+    sql = Sql(query.parsedQuery, mapping.simplifiyedYarrrml)
+    print(json.dumps(sql.sql, indent=2))
+    print(sql.queryStr)
 if __name__ == '__main__':
     main()
