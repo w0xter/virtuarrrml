@@ -6,6 +6,8 @@ class Sparql:
         self.rawQuery = ""
         self.parsedQuery = {}
         self.uris = {}
+        self.optionals = []
+        self.filters = []
         self.__readQuery()
         self.__readParseQuery()
         self.__getUrisFromQuery()
@@ -55,3 +57,10 @@ class Sparql:
                 else:
                     result[subject]['fullTM'] = True
         return result
+
+    def splitQueryInRequirements(self):
+        for tpo in self.parsedQuery["where"]:
+            if(tpo["type"] is "optional"):
+                self.optionals.append(tpo)
+            elif(tpo["type"] is "filter"):
+                self.filters.append(tpo)

@@ -1,1 +1,1 @@
-SELECT shape_id AS shapes_shape_id,shape_pt_sequence AS shapes_shape_pt_sequence,shape_pt_lat AS shapes_wgs84_poslat_shape_pt_lat,shape_pt_lon AS shapes_wgs84_poslong_shape_pt_lon,shape_pt_sequence AS shapes_termspointSequence_shape_pt_sequence FROM SHAPES ;
+SELECT stop_id AS stops_stop_id,stop_desc AS stops_description_stop_desc,stop_lat AS stops_wgs84_poslat_stop_lat,stop_lon AS stops_wgs84_poslong_stop_lon,wheelchair_boarding AS stops_termswheelchairAccessible_wheelchair_boarding FROM STOPS ;
