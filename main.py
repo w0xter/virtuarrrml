@@ -8,7 +8,8 @@ def main():
     mapping  = Yarrrml(gtfs + 'mapping.yaml')
     mapping.simplifyMappingAccordingToQuery(query.uris)
     sql = Sql(query.parsedQuery, mapping.simplifiyedYarrrml)
-    print(json.dumps(sql.sql, indent=2))
-    print(sql.queryStr)
+    print(json.dumps(query.splitedQuery, indent=2))
+    #print(json.dumps(sql.sql, indent=2))
+    #print(sql.queryStr)
 if __name__ == '__main__':
     main()
