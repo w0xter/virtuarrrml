@@ -1,3 +1,4 @@
+import sys
 import BashUtils as bash 
 import GeneralUtils as utils
 class Sparql:
@@ -66,24 +67,38 @@ class Sparql:
                 for tp in tpo["triples"]:
                     subject = tp["subject"]["value"]
                     if(subject not in self.splitedQuery.keys()):
-                        self.splitedQuery[subject] = {"mandatory":[], "optional":[]}
-                    self.splitedQuery[subject][tpoType].append(tp["predicate"]["value"])
+                        self.splitedQuery[subject] = {"mandatory":[], "optional":[], "filter":[]}
+                    self.splitedQuery[subject][tpoType].append({"predicate":tp["predicate"]["value"], "object":tp["object"]["value"]})
             elif(tpo["type"] == "optional"):
                self.__splitQueryIntoTpos(tpo["patterns"], tpoType="optional")
+            elif(tpo["type"] == "filter"):
+                obj = ""
+                for arg in tpo["expression"]["args"]:
+                    if(arg["termType"] == "Variable"):
+                        obj = arg["value"]
+                        break
+                subject = self.__findSubjectOfObject(obj, self.parsedQuery["where"])
+                if(subject == ""):
+                    print("Revisa SparqlUtils:L90")
+                    sys.exit()
+                if( subject not in self.splitedQuery.keys()):
+                    self.splitedQuery[subject] = {"mandatory":[], "optional":[], "filter":[]}
+
+                self.splitedQuery[subject]["filter"].append(tpo["expression"])
             else:
                 print(tpo['type'])
+                print(tpo)
 
-    # def splitQueryTposInto(self, tpos):
-    #     for tpo in self.parsedQuery["where"]:
-    #         if(tpo["type"] is "optional"):
-    #             self.__travelOptionalTpos(tpo["patterns"])
-    #         elif(tpo["type"] is "filter"):
-    #             self.filters.append(tpo)
-    #         elif(tpo["type"] is "bgp"):
+    def __findSubjectOfObject(self, obj, tpos):
+        for tpo in tpos:
+            if(tpo["type"] == "bgp"):
+                for tp in tpo["triples"]:
+                    subject = tp["subject"]["value"]
+                    if(tp["object"]["value"] == obj):
+                        return subject
+            elif(tpo["type"] == "optional"):
+                subject = self.__findSubjectOfObject(obj, tpo["patterns"])
+                if subject != "":
+                    return subject
+        return ""
 
-    # def __travelOptionalTpos(self, tpos):
-    #     for tpo in tpos:
-    #         if(tpo["type"] is "bgp"):
-    #             self.optionals["tpos"].append(tpo)
-    #         elif(tpo["type"] is "filter"):
-    #             self.optionals["filters"].append(tpo)

@@ -1,0 +1,49 @@
+{
+  "stops": {
+    "mandatory": [
+      {
+        "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "object": "http://vocab.gtfs.org/terms#Stop"
+      },
+      {
+        "predicate": "http://www.w3.org/2003/01/geo/wgs84_pos#lat",
+        "object": "stopLat"
+      },
+      {
+        "predicate": "http://www.w3.org/2003/01/geo/wgs84_pos#long",
+        "object": "stopLong"
+      }
+    ],
+    "optional": [
+      {
+        "predicate": "http://purl.org/dc/terms/description",
+        "object": "stopDescription"
+      },
+      {
+        "predicate": "http://vocab.gtfs.org/terms#wheelchairAccessible",
+        "object": "wheelchairAccesible"
+      }
+    ],
+    "filter": [
+      {
+        "type": "operation",
+        "operator": ">",
+        "args": [
+          {
+            "termType": "Variable",
+            "value": "stopLat"
+          },
+          {
+            "termType": "Literal",
+            "value": "40.41",
+            "language": "",
+            "datatype": {
+              "termType": "NamedNode",
+              "value": "http://www.w3.org/2001/XMLSchema#decimal"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

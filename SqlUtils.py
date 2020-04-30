@@ -1,8 +1,8 @@
 import GeneralUtils as utils
-
+import sys
 class Sql:
-    def __init__(self, query, mapping):
-        self.sparql = query
+    def __init__(self, requirements, mapping):
+        self.queryRequirements = requirements
         self.mapping = mapping
         self.sql = {}
         self.queryStr = []
@@ -26,7 +26,7 @@ class Sql:
         result["select"].append({"type":"mandatory", "columns":cols})        
         for po in predicateObjects:
             if(type(po) is not dict):
-                tpoType = "mandatory" if po[0] in self.sparql[tm]["mandatory"] else "optional"
+                tpoType = "mandatory" if po[0] in self.queryRequirements[tm]["mandatory"] else "optional"
                 cols = utils.cleanColPattern(po)
                 for col in cols:
                     uri = tm + "_" + utils.getLastElementFromUri(po[0]) + "_" + col
@@ -50,6 +50,7 @@ class Sql:
             if(len(self.sql[tm]["conditions"]) != 0):
                 selection += " WHERE TODO"
             self.queryStr.append(selection + " " + conditions)
+
     def writeQuery(self, path="tmp/result.sql"): 
         f = open(path, 'w')
         result =""
@@ -58,5 +59,24 @@ class Sql:
         f.write(result)
         f.close()
 
+    def __sqlOperator(self, op):
+        sameOps = ["<", ">", "=", ">=", "<="]
+        if(op in sameOps):
+            return op
+        elif(op == "&&"):
+            return "AND"
+        elif (op == "||"):
+            return "OR"
+        else:
+            print("Actually we don't support this operator: %s"%(op))
+            sys.exit()
 
-
+    def __generateFilters(self, filters, result):
+        for _filter in filters:
+            if(_filter["type"] == "operation"):
+                op = self.__sqlOperator(_filter["operator"])
+                condition = {"operator":op, "args":[]}
+                for arg in _filter["args"]:
+                    if("type" in arg.keys()):
+                        condition["args"].append(arg)
+                #self.sql[tpo]["condition"][]

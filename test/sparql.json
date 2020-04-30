@@ -13,7 +13,7 @@
         {
           "subject": {
             "termType": "Variable",
-            "value": "shape"
+            "value": "stop"
           },
           "predicate": {
             "termType": "NamedNode",
@@ -21,13 +21,66 @@
           },
           "object": {
             "termType": "NamedNode",
-            "value": "http://vocab.gtfs.org/terms#Shape"
+            "value": "http://vocab.gtfs.org/terms#Stop"
           }
-        },
+        }
+      ]
+    },
+    {
+      "type": "optional",
+      "patterns": [
+        {
+          "type": "bgp",
+          "triples": [
+            {
+              "subject": {
+                "termType": "Variable",
+                "value": "stop"
+              },
+              "predicate": {
+                "termType": "NamedNode",
+                "value": "http://purl.org/dc/terms/description"
+              },
+              "object": {
+                "termType": "Variable",
+                "value": "stopDescription"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "optional",
+      "patterns": [
+        {
+          "type": "bgp",
+          "triples": [
+            {
+              "subject": {
+                "termType": "Variable",
+                "value": "stop"
+              },
+              "predicate": {
+                "termType": "NamedNode",
+                "value": "http://vocab.gtfs.org/terms#wheelchairAccessible"
+              },
+              "object": {
+                "termType": "Variable",
+                "value": "wheelchairAccesible"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "bgp",
+      "triples": [
         {
           "subject": {
             "termType": "Variable",
-            "value": "shape"
+            "value": "stop"
           },
           "predicate": {
             "termType": "NamedNode",
@@ -35,13 +88,13 @@
           },
           "object": {
             "termType": "Variable",
-            "value": "shape_pt_lat"
+            "value": "stopLat"
           }
         },
         {
           "subject": {
             "termType": "Variable",
-            "value": "shape"
+            "value": "stop"
           },
           "predicate": {
             "termType": "NamedNode",
@@ -49,24 +102,32 @@
           },
           "object": {
             "termType": "Variable",
-            "value": "shape_pt_lon"
-          }
-        },
-        {
-          "subject": {
-            "termType": "Variable",
-            "value": "shape"
-          },
-          "predicate": {
-            "termType": "NamedNode",
-            "value": "http://vocab.gtfs.org/terms#pointSequence"
-          },
-          "object": {
-            "termType": "Variable",
-            "value": "shape_pt_sequence"
+            "value": "stopLong"
           }
         }
       ]
+    },
+    {
+      "type": "filter",
+      "expression": {
+        "type": "operation",
+        "operator": ">",
+        "args": [
+          {
+            "termType": "Variable",
+            "value": "stopLat"
+          },
+          {
+            "termType": "Literal",
+            "value": "40.41",
+            "language": "",
+            "datatype": {
+              "termType": "NamedNode",
+              "value": "http://www.w3.org/2001/XMLSchema#decimal"
+            }
+          }
+        ]
+      }
     }
   ],
   "type": "query",

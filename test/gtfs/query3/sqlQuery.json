@@ -1,0 +1,45 @@
+{
+  "stops": {
+    "source": "STOPS",
+    "select": [
+      {
+        "type": "mandatory",
+        "columns": [
+          "stop_id"
+        ]
+      },
+      {
+        "type": "optional",
+        "columns": [
+          "stop_desc"
+        ]
+      },
+      {
+        "type": "optional",
+        "columns": [
+          "stop_lat"
+        ]
+      },
+      {
+        "type": "optional",
+        "columns": [
+          "stop_lon"
+        ]
+      },
+      {
+        "type": "optional",
+        "columns": [
+          "wheelchair_boarding"
+        ]
+      }
+    ],
+    "conditions": [],
+    "alias": [
+      "stops_stop_id",
+      "stops_description_stop_desc",
+      "stops_wgs84_poslat_stop_lat",
+      "stops_wgs84_poslong_stop_lon",
+      "stops_termswheelchairAccessible_wheelchair_boarding"
+    ]
+  }
+}

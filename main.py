@@ -3,7 +3,7 @@ from SparqlUtils import Sparql
 from SqlUtils import Sql
 import json
 gtfs = "./test/gtfs/"
-directory  = "query1/"
+directory  = "query3/"
 def main():
     query = Sparql( gtfs + directory + 'query.rq')
     mapping  = Yarrrml(gtfs + 'mapping.yaml')
