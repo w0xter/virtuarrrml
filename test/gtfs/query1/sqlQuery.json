@@ -1,0 +1,40 @@
+{
+  "shapes": {
+    "source": "SHAPES",
+    "select": [
+      {
+        "type": "mandatory",
+        "columns": [
+          "shape_id",
+          "shape_pt_sequence"
+        ]
+      },
+      {
+        "type": "mandatory",
+        "columns": [
+          "shape_pt_lat"
+        ]
+      },
+      {
+        "type": "mandatory",
+        "columns": [
+          "shape_pt_lon"
+        ]
+      },
+      {
+        "type": "mandatory",
+        "columns": [
+          "shape_pt_sequence"
+        ]
+      }
+    ],
+    "conditions": [],
+    "alias": [
+      "shapes_shape_id",
+      "shapes_shape_pt_sequence",
+      "shapes_wgs84_poslat_shape_pt_lat",
+      "shapes_wgs84_poslong_shape_pt_lon",
+      "shapes_termspointSequence_shape_pt_sequence"
+    ]
+  }
+}

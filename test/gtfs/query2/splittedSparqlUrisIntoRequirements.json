@@ -1,0 +1,13 @@
+{
+  "stops": {
+    "mandatory": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "http://www.w3.org/2003/01/geo/wgs84_pos#lat",
+      "http://www.w3.org/2003/01/geo/wgs84_pos#long"
+    ],
+    "optional": [
+      "http://purl.org/dc/terms/description",
+      "http://vocab.gtfs.org/terms#wheelchairAccessible"
+    ]
+  }
+}

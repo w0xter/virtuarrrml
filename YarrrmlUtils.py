@@ -8,12 +8,14 @@ class Yarrrml:
         self.path = path
         self.yarrrml = {}
         self.simplifiyedYarrrml= {}
+        self.splitedUris = {}
         self.__readYarrrml()
         self.__substitutePrefixes()
         self.__fromSourcesToTables()
     def __readYarrrml(self):
         f = open(self.path, 'r', encoding='utf-8')
         self.yarrrml = yaml.load(f, Loader=yaml.FullLoader)
+        f.close()
     def setYarrrml(self, newYarrrml):
         self.yarrrml = newYarrrml
 
@@ -41,11 +43,11 @@ class Yarrrml:
                     expandedMapping[tm]['po'][index][0] = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
         self.yarrrml = {'prefixes':prefixes,'mappings':dict(expandedMapping)}
 
-    def simplifyMappingAccordingToQuery(self, uris):
+    def simplifyMappingAccordingToQuery(self, uris, splitedUris):
+        self.splitedUris = splitedUris
         newMapping = {'prefixes':self.yarrrml['prefixes'], 'mappings':{}}
         #print('MAPPING:\n' + str(mapping).replace('\'', '"'))
         #sys.exit()
-        
         if(not utils.checkEmptyUris(uris)):
             uris = self.__getTMsfromQueryUris(uris)
             for subject in uris.keys():
@@ -77,6 +79,7 @@ class Yarrrml:
         newMapping = self.__removeEmptyTM(newMapping)
         newMapping  = self.__addReferencesOfTheJoins(newMapping)
         self.simplifiyedYarrrml = newMapping
+        self.__removeDuplicatedUris(uris)
 
     def __getTMsfromQueryUris(self, uris):
         for subject in uris:
@@ -85,7 +88,13 @@ class Yarrrml:
                 tmUris = utils.getUrisFromTM(self.yarrrml['mappings'][tm])
                 if len(list(set(tmUris) & set(uris[subject]['uris']))) == len(uris[subject]['uris']):
                     uris[subject]['TMs'].append(tm)
+                    if(tm != subject):
+                        self.splitedUris[tm] = self.splitedUris[subject]
         return uris
+    def __removeDuplicatedUris(self, uris):
+        for subject in uris:
+            if(subject not in self.simplifiyedYarrrml["mappings"].keys()):
+                self.splitedUris.pop(subject)
 
     def __removeEmptyTM(self, mapping):
         #print('MAPPING:\n' + str(mapping).replace('\'','"'))

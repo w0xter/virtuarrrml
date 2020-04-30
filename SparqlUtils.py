@@ -16,6 +16,7 @@ class Sparql:
     def __readQuery(self):
         f = open(self.path, 'r', encoding='utf-8')
         self.rawQuery = f
+        f.close()
         
     def __readParseQuery(self):
         parsedQuery = bash.parseSparqlQuery(self.path)
@@ -66,7 +67,7 @@ class Sparql:
                     subject = tp["subject"]["value"]
                     if(subject not in self.splitedQuery.keys()):
                         self.splitedQuery[subject] = {"mandatory":[], "optional":[]}
-                    self.splitedQuery[subject][tpoType].append([tp["predicate"], tp["object"]])
+                    self.splitedQuery[subject][tpoType].append(tp["predicate"]["value"])
             elif(tpo["type"] == "optional"):
                self.__splitQueryIntoTpos(tpo["patterns"], tpoType="optional")
             else:

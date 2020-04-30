@@ -3,13 +3,20 @@ from SparqlUtils import Sparql
 from SqlUtils import Sql
 import json
 gtfs = "./test/gtfs/"
+directory  = "query1/"
 def main():
-    query = Sparql( gtfs + 'query2/query.rq')
+    query = Sparql( gtfs + directory + 'query.rq')
     mapping  = Yarrrml(gtfs + 'mapping.yaml')
-    mapping.simplifyMappingAccordingToQuery(query.uris)
-    sql = Sql(query.parsedQuery, mapping.simplifiyedYarrrml)
-    print(json.dumps(query.splitedQuery, indent=2))
-    #print(json.dumps(sql.sql, indent=2))
-    #print(sql.queryStr)
+    mapping.simplifyMappingAccordingToQuery(query.uris, query.splitedQuery)
+    sql = Sql(mapping.splitedUris, mapping.simplifiyedYarrrml)
+    writeResult(gtfs+directory+'splittedSparqlUrisIntoRequirements.json', mapping.splitedUris)
+    writeResult(gtfs+directory+'sqlQuery.json', sql.sql)
+    sql.writeQuery(gtfs+directory+'query.sql')
+
+def writeResult(path, data):
+    #Saving Results
+    f = open(path, 'w')
+    f.write(json.dumps(data, indent=2))
+    f.close()
 if __name__ == '__main__':
     main()
