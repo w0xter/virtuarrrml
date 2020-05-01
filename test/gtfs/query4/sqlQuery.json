@@ -1,0 +1,110 @@
+{
+  "routes": {
+    "source": "ROUTES",
+    "select": [
+      {
+        "type": "mandatory",
+        "columns": [
+          "route_id"
+        ],
+        "variable": "route"
+      },
+      {
+        "type": "mandatory",
+        "columns": [
+          "route_long_name"
+        ],
+        "variable": "longName"
+      }
+    ],
+    "conditions": [],
+    "alias": [
+      "routes_route_id",
+      "routes_route_long_name"
+    ]
+  },
+  "trips": {
+    "source": "TRIPS",
+    "select": [
+      {
+        "type": "mandatory",
+        "columns": [
+          "trip_id"
+        ],
+        "variable": "trip"
+      },
+      {
+        "type": "mandatory",
+        "columns": [
+          "trip_short_name"
+        ],
+        "variable": "shortName"
+      }
+    ],
+    "conditions": [],
+    "alias": [
+      "trips_trip_id",
+      "trips_trip_short_name"
+    ]
+  },
+  "stoptimes": {
+    "source": "STOP_TIMES",
+    "select": [
+      {
+        "type": "mandatory",
+        "columns": [
+          "trip_id",
+          "stop_id",
+          "arrival_time"
+        ],
+        "variable": "stopTime"
+      },
+      {
+        "type": "mandatory",
+        "columns": [
+          "arrival_time"
+        ],
+        "variable": "arrivalTime"
+      }
+    ],
+    "conditions": [],
+    "alias": [
+      "stoptimes_trip_id",
+      "stoptimes_stop_id",
+      "stoptimes_arrival_time",
+      "stoptimes_arrival_time"
+    ]
+  },
+  "stops": {
+    "source": "STOPS",
+    "select": [
+      {
+        "type": "mandatory",
+        "columns": [
+          "stop_id"
+        ],
+        "variable": "stop"
+      },
+      {
+        "type": "mandatory",
+        "columns": [
+          "stop_name"
+        ],
+        "variable": "name"
+      },
+      {
+        "type": "mandatory",
+        "columns": [
+          "wheelchair_boarding"
+        ],
+        "variable": "http://transport.linkeddata.es/resource/WheelchairBoardingStatus/1"
+      }
+    ],
+    "conditions": [],
+    "alias": [
+      "stops_stop_id",
+      "stops_stop_name",
+      "stops_wheelchair_boarding"
+    ]
+  }
+}

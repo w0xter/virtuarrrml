@@ -2,14 +2,113 @@
   "queryType": "SELECT",
   "variables": [
     {
-      "termType": "Wildcard",
-      "value": "*"
+      "termType": "Variable",
+      "value": "longName"
+    },
+    {
+      "expression": {
+        "expression": {
+          "termType": "Variable",
+          "value": "name"
+        },
+        "type": "aggregate",
+        "aggregation": "count",
+        "distinct": false
+      },
+      "variable": {
+        "termType": "Variable",
+        "value": "count"
+      }
     }
   ],
   "where": [
     {
       "type": "bgp",
       "triples": [
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "route"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+          },
+          "object": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#Route"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "route"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#longName"
+          },
+          "object": {
+            "termType": "Variable",
+            "value": "longName"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "trip"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+          },
+          "object": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#Trip"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "trip"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#shortName"
+          },
+          "object": {
+            "termType": "Variable",
+            "value": "shortName"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "stopTime"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+          },
+          "object": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#StopTime"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "stopTime"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#arrivalTime"
+          },
+          "object": {
+            "termType": "Variable",
+            "value": "arrivalTime"
+          }
+        },
         {
           "subject": {
             "termType": "Variable",
@@ -23,60 +122,7 @@
             "termType": "NamedNode",
             "value": "http://vocab.gtfs.org/terms#Stop"
           }
-        }
-      ]
-    },
-    {
-      "type": "optional",
-      "patterns": [
-        {
-          "type": "bgp",
-          "triples": [
-            {
-              "subject": {
-                "termType": "Variable",
-                "value": "stop"
-              },
-              "predicate": {
-                "termType": "NamedNode",
-                "value": "http://purl.org/dc/terms/description"
-              },
-              "object": {
-                "termType": "Variable",
-                "value": "stopDescription"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "optional",
-      "patterns": [
-        {
-          "type": "bgp",
-          "triples": [
-            {
-              "subject": {
-                "termType": "Variable",
-                "value": "stop"
-              },
-              "predicate": {
-                "termType": "NamedNode",
-                "value": "http://vocab.gtfs.org/terms#wheelchairAccessible"
-              },
-              "object": {
-                "termType": "Variable",
-                "value": "wheelchairAccesible"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "bgp",
-      "triples": [
+        },
         {
           "subject": {
             "termType": "Variable",
@@ -84,11 +130,11 @@
           },
           "predicate": {
             "termType": "NamedNode",
-            "value": "http://www.w3.org/2003/01/geo/wgs84_pos#lat"
+            "value": "http://xmlns.com/foaf/0.1/name"
           },
           "object": {
             "termType": "Variable",
-            "value": "stopLat"
+            "value": "name"
           }
         },
         {
@@ -98,36 +144,14 @@
           },
           "predicate": {
             "termType": "NamedNode",
-            "value": "http://www.w3.org/2003/01/geo/wgs84_pos#long"
+            "value": "http://vocab.gtfs.org/terms#wheelchairAccessible"
           },
           "object": {
-            "termType": "Variable",
-            "value": "stopLong"
+            "termType": "NamedNode",
+            "value": "http://transport.linkeddata.es/resource/WheelchairBoardingStatus/1"
           }
         }
       ]
-    },
-    {
-      "type": "filter",
-      "expression": {
-        "type": "operation",
-        "operator": ">",
-        "args": [
-          {
-            "termType": "Variable",
-            "value": "stopLat"
-          },
-          {
-            "termType": "Literal",
-            "value": "40.41",
-            "language": "",
-            "datatype": {
-              "termType": "NamedNode",
-              "value": "http://www.w3.org/2001/XMLSchema#decimal"
-            }
-          }
-        ]
-      }
     }
   ],
   "type": "query",
@@ -137,6 +161,9 @@
     "foaf": "http://xmlns.com/foaf/0.1/",
     "gtfs": "http://vocab.gtfs.org/terms#",
     "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
-    "dct": "http://purl.org/dc/terms/"
+    "dct": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "gtfsaccessible": "http://transport.linkeddata.es/resource/WheelchairBoardingStatus/",
+    "gtfslocation": "http://transport.linkeddata.es/resource/LocationType/"
   }
 }

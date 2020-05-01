@@ -67,8 +67,10 @@ class Sparql:
                 for tp in tpo["triples"]:
                     subject = tp["subject"]["value"]
                     if(subject not in self.splitedQuery.keys()):
-                        self.splitedQuery[subject] = {"mandatory":[], "optional":[], "filter":[]}
-                    self.splitedQuery[subject][tpoType].append({"predicate":tp["predicate"]["value"], "object":tp["object"]["value"]})
+                        self.splitedQuery[subject] = {"subjectVar":subject,"mandatory":{"predicates":[], "objects":[]}, "optional":{"predicates":[], "objects":[]}, "filter":[]}
+
+                    self.splitedQuery[subject][tpoType]["predicates"].append(tp["predicate"]["value"])
+                    self.splitedQuery[subject][tpoType]["objects"].append(tp["object"]["value"])
             elif(tpo["type"] == "optional"):
                self.__splitQueryIntoTpos(tpo["patterns"], tpoType="optional")
             elif(tpo["type"] == "filter"):
@@ -79,11 +81,10 @@ class Sparql:
                         break
                 subject = self.__findSubjectOfObject(obj, self.parsedQuery["where"])
                 if(subject == ""):
-                    print("Revisa SparqlUtils:L90")
+                    print("Review SparqlUtils:L90")
                     sys.exit()
                 if( subject not in self.splitedQuery.keys()):
-                    self.splitedQuery[subject] = {"mandatory":[], "optional":[], "filter":[]}
-
+                    self.splitedQuery[subject] = {"subjectVar":subject, "mandatory":{"predicates":[], "objects":[]}, "optional":{"predicates":[], "objects":[]}, "filter":[]}
                 self.splitedQuery[subject]["filter"].append(tpo["expression"])
             else:
                 print(tpo['type'])

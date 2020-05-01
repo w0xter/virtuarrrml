@@ -15,7 +15,10 @@ class Sql:
         self.__createSqlStrings()
 
     def __tm2Sql(self, tm):
-        result = {"source":"", "select":[], "conditions":[], "alias":[]}
+        conditions = []
+        if "filter" in self.queryRequirements[tm].keys():
+            conditions = self.__generateFilters(self.queryRequirements[tm]["filter"])            
+        result = {"source":"", "select":[], "conditions":conditions, "alias":[]}
         subject = self.mapping["mappings"][tm]["s"]
         result["source"] = self.mapping["mappings"][tm]["sources"][0]["table"]
         predicateObjects = self.mapping["mappings"][tm]["po"]
@@ -23,16 +26,20 @@ class Sql:
         for col in cols:
             uri = tm +  "_" + col
             result["alias"].append(uri)
-        result["select"].append({"type":"mandatory", "columns":cols})        
+        result["select"].append({"type":"mandatory", "columns":cols, "variable":self.queryRequirements[tm]["subjectVar"]})        
         for po in predicateObjects:
             if(type(po) is not dict):
-                tpoType = "mandatory" if po[0] in self.queryRequirements[tm]["mandatory"] else "optional"
+                tpoType = "mandatory" if po[0] in self.queryRequirements[tm]["mandatory"]["predicates"] else "optional"
+                predicatePosition = self.queryRequirements[tm][tpoType]["predicates"].index(po[0])
                 cols = utils.cleanColPattern(po)
                 for col in cols:
-                    uri = tm + "_" + utils.getLastElementFromUri(po[0]) + "_" + col
+                    uri = tm + "_"  + col
                     result["alias"].append(uri)
                 if(len(cols) > 0):
-                    result["select"].append({"type":tpoType, "columns":cols})
+                    result["select"].append({
+                        "type":tpoType,
+                        "columns":cols,
+                        "variable":self.queryRequirements[tm][tpoType]["objects"][predicatePosition]})
         self.sql[tm] = result
         
     def __createSqlStrings(self):
@@ -40,22 +47,25 @@ class Sql:
             selection = "SELECT "
             conditions = "WHERE "
             for i,obj in enumerate(self.sql[tm]["select"]):
-                for col in obj["columns"]:
-                    selection += "%s AS %s,"%(col, self.sql[tm]["alias"][i]) + "\n" #TODO \n only for developing!!!
-                    conditions += "%s IS NOT NULL AND \n"%(self.sql[tm]["alias"][i]) if self.sql[tm]["select"][i]["type"] is "mandatory" else ""
-            #Remember to remove only last char if goes to production!!
-            selection = selection[:-2] + " FROM %s "%(self.sql[tm]["source"]) + "\n" #TODO \n only for developing!!!
-            #Remember to remove only last 4 char if goes to production!!
-            conditions = conditions[:-5]
+                for j,col in enumerate(obj["columns"]):
+                    selection += "%s AS %s"%(col, self.sql[tm]["alias"][i])
+                    selection += ",\n" if j ==0 or j < len(obj["columns"]) - 1 else "" #TODO \n only for developing!!!
+                    conditions += "%s IS NOT NULL "%(self.sql[tm]["alias"][i]) if self.sql[tm]["select"][i]["type"] is "mandatory" else ""
+                    conditions += "AND \n" if (j == 0 or j < len(obj["columns"]) - 1) and self.sql[tm]["select"][i]["type"] is "mandatory" else "" #TODO \n only for developing!!!
+
+            selection += " FROM %s "%(self.sql[tm]["source"]) + "\n" #TODO \n only for developing!!!
             if(len(self.sql[tm]["conditions"]) != 0):
-                selection += " WHERE TODO"
+                if(len(conditions) > 0):
+                    conditions += "AND "
+                conditions += self.__generateStringSqlConditions(tm,self.sql[tm]["conditions"])
             self.queryStr.append(selection + " " + conditions)
 
     def writeQuery(self, path="tmp/result.sql"): 
         f = open(path, 'w')
         result =""
-        for querie in self.queryStr:
-            result += querie + ";" + "\n"
+        for i,querie in enumerate(self.queryStr):
+            result += "(" + querie + ")" + "\n"
+            result += " JOIN " if i < len(self.queryStr) - 1 else ";"
         f.write(result)
         f.close()
 
@@ -71,12 +81,51 @@ class Sql:
             print("Actually we don't support this operator: %s"%(op))
             sys.exit()
 
-    def __generateFilters(self, filters, result):
+    def __generateFilters(self, filters, result=[]):
         for _filter in filters:
             if(_filter["type"] == "operation"):
                 op = self.__sqlOperator(_filter["operator"])
                 condition = {"operator":op, "args":[]}
                 for arg in _filter["args"]:
-                    if("type" in arg.keys()):
+                    if("termType" in arg.keys()):
                         condition["args"].append(arg)
-                #self.sql[tpo]["condition"][]
+                    elif("type" in arg.keys()):
+                        condition["args"].extend(self.__generateFilters(arg, []))
+                result.append(condition)
+        return result
+
+    def __sparqlDataType2Sql(self, arg):
+        xsd = "http://www.w3.org/2001/XMLSchema#"
+        dataType = arg["datatype"]["value"] 
+        value = arg["value"]
+        if(dataType == xsd + "string"):
+            return '%s'%(value)
+        return value
+
+    def __generateStringSqlConditions(self,tm,conditions):        
+            result= ""
+            for i,condition in enumerate(conditions):
+                result += self.__travelConditionArgs(tm,condition["operator"],condition["args"])
+                result += "AND" if i < len(conditions) - 1 else ""
+            return result 
+            
+
+    def __travelConditionArgs(self, tm, operator, args):
+            result = "("
+            for i, arg in enumerate(args):
+                if("termType" in arg.keys()):
+                    if(arg["termType"] == "Literal"):
+                        result += self.__sparqlDataType2Sql(arg) + " "
+                    elif(arg["termType"] == "Variable"):
+                        result += self.__getSqlALias(tm,arg["value"]) + " "
+                elif("type" in arg.keys()):
+                    result += self.__travelConditionArgs(tm, arg["operator"], arg["args"])
+                result +=  operator + " " if i < len(args) - 1 else ""
+            result += ")"
+            return result
+
+    def __getSqlALias(self, tm,var):
+        for i,col in enumerate(self.sql[tm]["select"]):
+            if(var == col["variable"]):
+                return self.sql[tm]["alias"][i]
+

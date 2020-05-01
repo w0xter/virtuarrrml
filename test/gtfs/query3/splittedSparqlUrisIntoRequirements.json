@@ -1,29 +1,28 @@
 {
   "stops": {
-    "mandatory": [
-      {
-        "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-        "object": "http://vocab.gtfs.org/terms#Stop"
-      },
-      {
-        "predicate": "http://www.w3.org/2003/01/geo/wgs84_pos#lat",
-        "object": "stopLat"
-      },
-      {
-        "predicate": "http://www.w3.org/2003/01/geo/wgs84_pos#long",
-        "object": "stopLong"
-      }
-    ],
-    "optional": [
-      {
-        "predicate": "http://purl.org/dc/terms/description",
-        "object": "stopDescription"
-      },
-      {
-        "predicate": "http://vocab.gtfs.org/terms#wheelchairAccessible",
-        "object": "wheelchairAccesible"
-      }
-    ],
+    "subjectVar": "stop",
+    "mandatory": {
+      "predicates": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "http://www.w3.org/2003/01/geo/wgs84_pos#lat",
+        "http://www.w3.org/2003/01/geo/wgs84_pos#long"
+      ],
+      "objects": [
+        "http://vocab.gtfs.org/terms#Stop",
+        "stopLat",
+        "stopLong"
+      ]
+    },
+    "optional": {
+      "predicates": [
+        "http://purl.org/dc/terms/description",
+        "http://vocab.gtfs.org/terms#wheelchairAccessible"
+      ],
+      "objects": [
+        "stopDescription",
+        "wheelchairAccesible"
+      ]
+    },
     "filter": [
       {
         "type": "operation",

@@ -1,0 +1,76 @@
+{
+  "routes": {
+    "subjectVar": "route",
+    "mandatory": {
+      "predicates": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "http://vocab.gtfs.org/terms#longName"
+      ],
+      "objects": [
+        "http://vocab.gtfs.org/terms#Route",
+        "longName"
+      ]
+    },
+    "optional": {
+      "predicates": [],
+      "objects": []
+    },
+    "filter": []
+  },
+  "trips": {
+    "subjectVar": "trip",
+    "mandatory": {
+      "predicates": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "http://vocab.gtfs.org/terms#shortName"
+      ],
+      "objects": [
+        "http://vocab.gtfs.org/terms#Trip",
+        "shortName"
+      ]
+    },
+    "optional": {
+      "predicates": [],
+      "objects": []
+    },
+    "filter": []
+  },
+  "stoptimes": {
+    "subjectVar": "stopTime",
+    "mandatory": {
+      "predicates": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "http://vocab.gtfs.org/terms#arrivalTime"
+      ],
+      "objects": [
+        "http://vocab.gtfs.org/terms#StopTime",
+        "arrivalTime"
+      ]
+    },
+    "optional": {
+      "predicates": [],
+      "objects": []
+    },
+    "filter": []
+  },
+  "stops": {
+    "subjectVar": "stop",
+    "mandatory": {
+      "predicates": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "http://xmlns.com/foaf/0.1/name",
+        "http://vocab.gtfs.org/terms#wheelchairAccessible"
+      ],
+      "objects": [
+        "http://vocab.gtfs.org/terms#Stop",
+        "name",
+        "http://transport.linkeddata.es/resource/WheelchairBoardingStatus/1"
+      ]
+    },
+    "optional": {
+      "predicates": [],
+      "objects": []
+    },
+    "filter": []
+  }
+}

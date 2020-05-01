@@ -6,40 +6,64 @@
         "type": "mandatory",
         "columns": [
           "stop_id"
-        ]
+        ],
+        "variable": "stop"
       },
       {
         "type": "optional",
         "columns": [
           "stop_desc"
-        ]
+        ],
+        "variable": "stopDescription"
       },
       {
-        "type": "optional",
+        "type": "mandatory",
         "columns": [
           "stop_lat"
-        ]
+        ],
+        "variable": "stopLat"
       },
       {
-        "type": "optional",
+        "type": "mandatory",
         "columns": [
           "stop_lon"
-        ]
+        ],
+        "variable": "stopLong"
       },
       {
         "type": "optional",
         "columns": [
           "wheelchair_boarding"
+        ],
+        "variable": "wheelchairAccesible"
+      }
+    ],
+    "conditions": [
+      {
+        "operator": ">",
+        "args": [
+          {
+            "termType": "Variable",
+            "value": "stopLat"
+          },
+          {
+            "termType": "Literal",
+            "value": "40.41",
+            "language": "",
+            "datatype": {
+              "termType": "NamedNode",
+              "value": "http://www.w3.org/2001/XMLSchema#decimal"
+            }
+          }
         ]
       }
     ],
-    "conditions": [],
     "alias": [
       "stops_stop_id",
-      "stops_description_stop_desc",
-      "stops_wgs84_poslat_stop_lat",
-      "stops_wgs84_poslong_stop_lon",
-      "stops_termswheelchairAccessible_wheelchair_boarding"
+      "stops_stop_desc",
+      "stops_stop_lat",
+      "stops_stop_lon",
+      "stops_wheelchair_boarding"
     ]
   }
 }
