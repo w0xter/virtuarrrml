@@ -2,16 +2,17 @@ from YarrrmlUtils import Yarrrml
 from SparqlUtils import Sparql
 from SqlUtils import Sql
 import json
-gtfs = "./test/gtfs/"
-directory  = "query4/"
+dataset = "./test/motivationexample/"
+queryDir  = "query1/"
 def main():
-    query = Sparql( gtfs + directory + 'query.rq')
-    mapping  = Yarrrml(gtfs + 'mapping.yaml')
+    query = Sparql( dataset + queryDir + 'query.rq')
+    mapping  = Yarrrml(dataset + 'mapping.yaml')
     mapping.simplifyMappingAccordingToQuery(query.uris, query.splitedQuery)
-    writeResult(gtfs+directory+'splittedSparqlUrisIntoRequirements.json', mapping.splitedUris)
+    mapping.writeSimplifiedMapping(dataset + queryDir + "mapping.simplified.yaml")
+    writeResult(dataset+queryDir+'splittedSparqlUrisIntoRequirements.json', mapping.splitedUris)
     sql = Sql(mapping.splitedUris, mapping.simplifiyedYarrrml)
-    writeResult(gtfs+directory+'sqlQuery.json', sql.sql)
-    sql.writeQuery(gtfs+directory+'query.sql')
+    writeResult(dataset+queryDir+'sqlQuery.json', sql.sql)
+    sql.writeQuery(dataset+queryDir+'query.sql')
 
 def writeResult(path, data):
     #Saving Results

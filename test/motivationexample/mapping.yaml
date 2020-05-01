@@ -1,0 +1,44 @@
+prefixes:
+  ex: http://example.com/
+mappings:
+  color:
+    sources:
+    - [colors.csv~csv]
+    s: ex:Color/$(id)
+    po:
+      - [a, ex:Color]
+      - [ex:name, $(name)] 
+      - p: ex:complementary
+        o: 
+          - mapping: color
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(complementary)]
+                - [str2, $(id)]
+  fruit: 
+    sources:
+    - [fruits.csv~csv]
+    s: ex:Fruit/$(id)
+    po:
+      - [a, ex:Fruit]
+      - [ex:name, $(name)]
+      - [ex:origin, $(origin)]
+      - p: ex:Color
+        o: 
+          - mapping: color
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(color)]
+                - [str2, $(name)]
+      - p: ex:sameOrigin
+        o: 
+          - mapping: fruit
+            condition:
+              function:  equal
+              parameters:
+                - [str1, $(origin)]
+                - [str2, $(origin)]
+
+      

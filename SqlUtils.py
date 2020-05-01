@@ -49,14 +49,17 @@ class Sql:
             for i,obj in enumerate(self.sql[tm]["select"]):
                 for j,col in enumerate(obj["columns"]):
                     selection += "%s AS %s"%(col, self.sql[tm]["alias"][i])
-                    selection += ",\n" if j ==0 or j < len(obj["columns"]) - 1 else "" #TODO \n only for developing!!!
+                    selection += ",\n" if j < len(obj["columns"]) - 1 else "" #TODO \n only for developing!!!
                     conditions += "%s IS NOT NULL "%(self.sql[tm]["alias"][i]) if self.sql[tm]["select"][i]["type"] is "mandatory" else ""
-                    conditions += "AND \n" if (j == 0 or j < len(obj["columns"]) - 1) and self.sql[tm]["select"][i]["type"] is "mandatory" else "" #TODO \n only for developing!!!
+                    conditions += "AND \n" if (j < len(obj["columns"]) - 1) and self.sql[tm]["select"][i]["type"] is "mandatory" else "" #TODO \n only for developing!!!
+                if i < len(self.sql[tm]["select"]) - 1:
+                    selection += ",\n"
+                    conditions += "AND \n" if self.sql[tm]["select"][i]["type"] is "mandatory" else ""
 
             selection += " FROM %s "%(self.sql[tm]["source"]) + "\n" #TODO \n only for developing!!!
             if(len(self.sql[tm]["conditions"]) != 0):
-                if(len(conditions) > 0):
-                    conditions += "AND "
+                
+                conditions += "AND " if(len(conditions) > 0) else ""
                 conditions += self.__generateStringSqlConditions(tm,self.sql[tm]["conditions"])
             self.queryStr.append(selection + " " + conditions)
 

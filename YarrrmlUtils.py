@@ -124,6 +124,7 @@ class Yarrrml:
         for tm in mapping['mappings']:
             for po in mapping['mappings'][tm]['po']:
                 if type(po) is dict:
+                    print(po['o'])
                     for o in po['o']:
                         tmReferences.update(self.__checkIfReferenceIsDefined(tmReferences,mapping,o))
         newMapping['mappings'].update(tmReferences)
@@ -132,6 +133,7 @@ class Yarrrml:
     def __checkIfReferenceIsDefined(self,storedTm,mapping,o):
         newMapping = mapping.copy()
         #print('\n\nO:\n\n' + str(o))
+        print(o)
         joinReferences = utils.getJoinReferences(o)
         tmName = o['mapping']
         #print('\n\n\nJOIN REFERENCES:\n\n\n' + str(joinReferences))
@@ -155,3 +157,10 @@ class Yarrrml:
         for tm in self.yarrrml["mappings"]:
             source = self.yarrrml["mappings"][tm]["sources"][0][0].split("/")[-1].replace(".csv~csv","")
             self.yarrrml["mappings"][tm]["sources"] = [{"table": source.upper()}]
+
+    def writeSimplifiedMapping(self, path):
+        strMapping = str(yaml.dump({"prefixes":self.yarrrml["prefixes"]}, default_flow_style=False))
+        strMapping +=  str(yaml.dump({"mappings":self.yarrrml["mappings"]}, default_flow_style=None)).replace('"', '')
+        f = open(path, 'w')
+        f.write(strMapping)
+        f.close()

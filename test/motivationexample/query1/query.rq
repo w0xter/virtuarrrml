@@ -1,0 +1,14 @@
+PREFIX ex: <http://example.com/> 
+
+
+SELECT * WHERE {
+    ?fruit a ex:Fruit .
+    ?fruit ex:Color  ?color.
+    ?fruit ex:origin ?origin.
+    ?fruit ex:sameOrigin ?fruit2.
+    ?fruit2 ex:Color ?color2.
+    ?color2 ex:name ?colorName .
+    ?color ex:name "red"^^<http://www.w3.org/2001/XMLSchema#string>.
+    FILTER(?origin = "spain"^^<http://www.w3.org/2001/XMLSchema#string>)
+
+}

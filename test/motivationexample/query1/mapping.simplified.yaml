@@ -1,0 +1,13 @@
+prefixes:
+  ex: http://example.com/
+mappings:
+  color:
+    po: []
+    s: http://example.com/Color/$(id)
+    sources:
+    - {table: COLORS}
+  fruit:
+    po: []
+    s: http://example.com/Fruit/$(id)
+    sources:
+    - {table: FRUITS}

@@ -1,0 +1,34 @@
+{
+  "fruit": {
+    "subjectVar": "color2",
+    "mandatory": {
+      "predicates": [
+        "http://example.com/name"
+      ],
+      "objects": [
+        "colorName"
+      ]
+    },
+    "optional": {
+      "predicates": [],
+      "objects": []
+    },
+    "filter": []
+  },
+  "color": {
+    "subjectVar": "color2",
+    "mandatory": {
+      "predicates": [
+        "http://example.com/name"
+      ],
+      "objects": [
+        "colorName"
+      ]
+    },
+    "optional": {
+      "predicates": [],
+      "objects": []
+    },
+    "filter": []
+  }
+}
