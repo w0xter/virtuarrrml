@@ -2,13 +2,15 @@ from YarrrmlUtils import Yarrrml
 from SparqlUtils import Sparql
 from SqlUtils import Sql
 import json
+import sys
 dataset = "./test/motivationexample/"
-queryDir  = "query1/"
+queryDir  = "query2/"
 def main():
     query = Sparql( dataset + queryDir + 'query.rq')
     mapping  = Yarrrml(dataset + 'mapping.yaml')
     mapping.simplifyMappingAccordingToQuery(query.uris, query.splitedQuery)
     mapping.writeSimplifiedMapping(dataset + queryDir + "mapping.simplified.yaml")
+    sys.exit()
     writeResult(dataset+queryDir+'splittedSparqlUrisIntoRequirements.json', mapping.splitedUris)
     sql = Sql(mapping.splitedUris, mapping.simplifiyedYarrrml)
     writeResult(dataset+queryDir+'sqlQuery.json', sql.sql)

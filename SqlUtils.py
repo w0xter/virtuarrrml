@@ -131,4 +131,7 @@ class Sql:
         for i,col in enumerate(self.sql[tm]["select"]):
             if(var == col["variable"]):
                 return self.sql[tm]["alias"][i]
+            else:
+                print("Review SqlUtils L 132")
+                print("Tm: %s Var: %s"%(str(tm), str(var)))
 

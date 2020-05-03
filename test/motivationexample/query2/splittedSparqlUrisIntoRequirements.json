@@ -1,0 +1,129 @@
+{
+  "color": {
+    "subjectVar": "color",
+    "mandatory": {
+      "predicates": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "http://example.com/name",
+        "http://example.com/complementary"
+      ],
+      "objects": [
+        "http://example.com/Color",
+        "colorName",
+        "complementary"
+      ]
+    },
+    "optional": {
+      "predicates": [],
+      "objects": []
+    },
+    "filter": []
+  },
+  "fruit": {
+    "subjectVar": "fruit",
+    "mandatory": {
+      "predicates": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "http://example.com/origin"
+      ],
+      "objects": [
+        "http://example.com/Fruit",
+        "fruitOrigin"
+      ]
+    },
+    "optional": {
+      "predicates": [],
+      "objects": []
+    },
+    "filter": [
+      {
+        "type": "operation",
+        "operator": "&&",
+        "args": [
+          {
+            "type": "operation",
+            "operator": "=",
+            "args": [
+              {
+                "termType": "Variable",
+                "value": "colorName"
+              },
+              {
+                "termType": "Literal",
+                "value": "yellow",
+                "language": "",
+                "datatype": {
+                  "termType": "NamedNode",
+                  "value": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              }
+            ]
+          },
+          {
+            "type": "operation",
+            "operator": "=",
+            "args": [
+              {
+                "termType": "Variable",
+                "value": "fruitOrigin"
+              },
+              {
+                "termType": "Literal",
+                "value": "spain",
+                "language": "",
+                "datatype": {
+                  "termType": "NamedNode",
+                  "value": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "operation",
+        "operator": "&&",
+        "args": [
+          {
+            "type": "operation",
+            "operator": "=",
+            "args": [
+              {
+                "termType": "Variable",
+                "value": "colorName"
+              },
+              {
+                "termType": "Literal",
+                "value": "yellow",
+                "language": "",
+                "datatype": {
+                  "termType": "NamedNode",
+                  "value": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              }
+            ]
+          },
+          {
+            "type": "operation",
+            "operator": "=",
+            "args": [
+              {
+                "termType": "Variable",
+                "value": "fruitOrigin"
+              },
+              {
+                "termType": "Literal",
+                "value": "spain",
+                "language": "",
+                "datatype": {
+                  "termType": "NamedNode",
+                  "value": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

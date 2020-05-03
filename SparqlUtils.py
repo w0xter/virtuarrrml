@@ -62,33 +62,32 @@ class Sparql:
         return result
 
     def __splitQueryIntoTpos(self, tpos, tpoType="mandatory"):
+        createSbuject = lambda subject: {"subjectVar":subject, "mandatory":{"predicates":[], "objects":[]}, "optional":{"predicates":[], "objects":[]}, "filter":[]}
         for tpo in tpos:
             if(tpo["type"] == "bgp"):
                 for tp in tpo["triples"]:
                     subject = tp["subject"]["value"]
                     if(subject not in self.splitedQuery.keys()):
-                        self.splitedQuery[subject] = {"subjectVar":subject,"mandatory":{"predicates":[], "objects":[]}, "optional":{"predicates":[], "objects":[]}, "filter":[]}
-
-                    self.splitedQuery[subject][tpoType]["predicates"].append(tp["predicate"]["value"])
-                    self.splitedQuery[subject][tpoType]["objects"].append(tp["object"]["value"])
+                        self.splitedQuery["tpos"][subject] = createSbuject(subject)
+                    self.splitedQuery["tpos"][subject][tpoType]["predicates"].append(tp["predicate"]["value"])
+                    self.splitedQuery["tpos"][subject][tpoType]["objects"].append(tp["object"]["value"])
             elif(tpo["type"] == "optional"):
                self.__splitQueryIntoTpos(tpo["patterns"], tpoType="optional")
             elif(tpo["type"] == "filter"):
-                obj = ""
-                for arg in tpo["expression"]["args"]:
-                    if(arg["termType"] == "Variable"):
-                        obj = arg["value"]
-                        break
-                subject = self.__findSubjectOfObject(obj, self.parsedQuery["where"])
-                if(subject == ""):
-                    print("Review SparqlUtils:L90")
-                    sys.exit()
-                if( subject not in self.splitedQuery.keys()):
-                    self.splitedQuery[subject] = {"subjectVar":subject, "mandatory":{"predicates":[], "objects":[]}, "optional":{"predicates":[], "objects":[]}, "filter":[]}
-                self.splitedQuery[subject]["filter"].append(tpo["expression"])
+                objects = self.__findObjectsOfFilterArgs(tpo["expression"]["args"])
+                for obj in objects:
+                    subject = self.__findSubjectOfObject(obj, self.parsedQuery["where"])
+                    print(subject)
+                    if(subject == ""):
+                        print("Review SparqlUtils __splitQueryIntoTpos:L90")
+                        sys.exit()
+                    if( subject not in self.splitedQuery.keys()):
+                        self.splitedQuery[subject] = createSbuject(subject)
+                    self.splitedQuery[subject]["filter"].append(tpo["expression"])
             else:
-                print(tpo['type'])
                 print(tpo)
+                print("Review SparqlUtils __splitQueryIntoTpos:L96")
+                sys.exit()
 
     def __findSubjectOfObject(self, obj, tpos):
         for tpo in tpos:
@@ -102,4 +101,14 @@ class Sparql:
                 if subject != "":
                     return subject
         return ""
+    def __findObjectsOfFilterArgs(self, args):
+        result= []
+        for arg in args:
+            if("termType" in arg.keys() and arg["termType"] == "Variable"):
+                result.append(arg["value"])
+            elif "type" in arg.keys():
+                objects =  self.__findObjectsOfFilterArgs(arg["args"])
+                if len(objects) > 0:
+                    result.extend(objects)
+        return result
 
