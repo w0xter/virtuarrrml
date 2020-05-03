@@ -4,7 +4,7 @@
 
 #### Index:
 
-- [Extracting filters from the original query](#Extracting filters from the original query)
+- [ Extracting filters from the original query ](#Extracting filters from the original query)
 
 ### Extracting filters from the original query  
 
