@@ -4,7 +4,7 @@
 
 #### Index:
 
-- **[Subject and Object instantiation](#Subject and Object instantiation)**
+- [Subject and Object instantiation](#subject-and-object-instantiation)
 
 
 
