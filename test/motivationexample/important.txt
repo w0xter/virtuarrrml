@@ -1,0 +1,43 @@
+PREFIX semweb: <http://semweb.mmlab.be/ns/rml#>
+PREFIX r2rml: <http://www.w3.org/ns/r2rml#>
+select distinct ?TM ?predicate ?column ?constant ?parentTM ?parentColumn ?childColumn where {
+?TM a r2rml:TriplesMap;
+r2rml:predicateObjectMap ?po.
+?po r2rml:predicateMap ?p.
+?po r2rml:objectMap ?o.
+?p r2rml:constant ?predicate.
+OPTIONAL {?o semweb:reference ?column}
+OPTIONAL {?o r2rml:constant ?constant }
+OPTIONAL {?o r2rml:parentTriplesMap ?parentTM;
+r2rml:joinCondition ?jc.
+?jc r2rml:parent ?parentColumn.
+?jc r2rml:child ?childColumn.
+}
+} LIMIT 100
+------------------------------------------------------
+Building a graph with the TM and the predicates objects that satisfy this query:
+select * where{
+    ?s <http://example.com/sameOrigin> ?sameOrigin.
+    ?s <http://example.com/name> ?name
+}
+
+RESULT:
+
+PREFIX semweb: <http://semweb.mmlab.be/ns/rml#>
+PREFIX r2rml: <http://www.w3.org/ns/r2rml#>
+
+
+construct {
+?TM1 r2rml:predicateMap ?po1.
+?TM1 r2rml:predicateMap ?po2.
+
+} where {
+
+?TM1 a r2rml:TriplesMap;
+r2rml:predicateObjectMap ?po1;
+r2rml:predicateObjectMap ?po2.
+?po1 r2rml:predicateMap ?p1.
+?p1 r2rml:constant <http://example.com/sameOrigin>.
+?po2 r2rml:predicateMap ?p2.
+?p2 r2rml:constant <http://example.com/name>.
+} LIMIT 100

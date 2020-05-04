@@ -1,0 +1,32 @@
+prefixes:
+  ex: http://example.com/
+mappings:
+  color:
+    po: []
+    s: http://example.com/Color/$(name)
+    sources:
+    - {table: COLORS}
+  fruit:
+    po:
+    - ['http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 'http://example.com/Fruit']
+    - ['http://example.com/name', $(name)]
+    - ['http://example.com/origin', $(origin)]
+    - o:
+      - condition:
+          function: equal
+          parameters:
+          - [str1, $(color)]
+          - [str2, $(name)]
+        mapping: color
+      p: http://example.com/Color
+    - o:
+      - condition:
+          function: equal
+          parameters:
+          - [str1, $(origin)]
+          - [str2, $(origin)]
+        mapping: fruit
+      p: http://example.com/sameOrigin
+    s: http://example.com/Fruit/$(name)
+    sources:
+    - {table: FRUITS}

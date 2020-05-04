@@ -4,13 +4,13 @@ from SqlUtils import Sql
 import json
 import sys
 dataset = "./test/motivationexample/"
-queryDir  = "query2/"
+queryDir  = "query3/"
 def main():
     query = Sparql( dataset + queryDir + 'query.rq')
     mapping  = Yarrrml(dataset + 'mapping.yaml')
+    writeResult(dataset + queryDir + "queryUris.json", query.uris)
     mapping.simplifyMappingAccordingToQuery(query.uris, query.splitedQuery)
     mapping.writeSimplifiedMapping(dataset + queryDir + "mapping.simplified.yaml")
-    sys.exit()
     writeResult(dataset+queryDir+'splittedSparqlUrisIntoRequirements.json', mapping.splitedUris)
     sql = Sql(mapping.splitedUris, mapping.simplifiyedYarrrml)
     writeResult(dataset+queryDir+'sqlQuery.json', sql.sql)

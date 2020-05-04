@@ -1,0 +1,37 @@
+{
+  "tpos": {
+    "fruit": {
+      "subjectVar": "fruit",
+      "mandatory": {
+        "predicates": [
+          "http://example.com/origin"
+        ],
+        "objects": [
+          "origin"
+        ]
+      },
+      "optional": {
+        "predicates": [],
+        "objects": []
+      },
+      "filter": []
+    },
+    "color": {
+      "subjectVar": "color",
+      "mandatory": {
+        "predicates": [
+          "http://example.com/complementary"
+        ],
+        "objects": [
+          "complementary"
+        ]
+      },
+      "optional": {
+        "predicates": [],
+        "objects": []
+      },
+      "filter": []
+    }
+  },
+  "filter": []
+}

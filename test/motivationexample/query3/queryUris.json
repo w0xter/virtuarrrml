@@ -1,0 +1,14 @@
+{
+  "fruit": {
+    "uris": [
+      "http://example.com/origin"
+    ],
+    "fullTM": false
+  },
+  "color": {
+    "uris": [
+      "http://example.com/complementary"
+    ],
+    "fullTM": false
+  }
+}

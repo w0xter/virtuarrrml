@@ -1,0 +1,4 @@
+select * where{
+    ?fruit <http://example.com/origin> ?origin.
+    ?color <http://example.com/complementary> ?complementary.
+}

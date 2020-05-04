@@ -7,7 +7,7 @@ class Sparql:
         self.rawQuery = ""
         self.parsedQuery = {}
         self.uris = {}
-        self.splitedQuery = {}
+        self.splitedQuery = {"tpos":{}, "filter":[]}
         self.filters = []
         self.__readQuery()
         self.__readParseQuery()
