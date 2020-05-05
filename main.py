@@ -3,8 +3,8 @@ from SparqlUtils import Sparql
 from SqlUtils import Sql
 import json
 import sys
-dataset = "./test/motivationexample/"
-queryDir  = "query3/"
+dataset = "./test/gtfs/"
+queryDir  = "query2/"
 def main():
     query = Sparql( dataset + queryDir + 'query.rq')
     mapping  = Yarrrml(dataset + 'mapping.yaml')

@@ -1,0 +1,52 @@
+@prefix ns1: <http://www.w3.org/ns/r2rml#> .
+@prefix ns2: <http://semweb.mmlab.be/ns/rml#> .
+
+<http://mapping.example.com/map_fruit_0> a ns1:TriplesMap ;
+    ns2:logicalSource <http://mapping.example.com/source_1> ;
+    ns1:predicateObjectMap <http://mapping.example.com/pom_5> ;
+    ns1:subjectMap <http://mapping.example.com/s_1> .
+
+<http://mapping.example.com/jc_0> ns1:child "complementary" ;
+    ns1:parent "id" .
+
+<http://mapping.example.com/map_color_0> a ns1:TriplesMap ;
+    ns2:logicalSource <http://mapping.example.com/source_0> ;
+    ns1:predicateObjectMap <http://mapping.example.com/pom_2> ;
+    ns1:subjectMap <http://mapping.example.com/s_0> .
+
+<http://mapping.example.com/om_2> a ns1:ObjectMap ;
+    ns1:joinCondition <http://mapping.example.com/jc_0> ;
+    ns1:parentTriplesMap <http://mapping.example.com/map_color_0> .
+
+<http://mapping.example.com/om_5> a ns1:ObjectMap ;
+    ns2:reference "origin" ;
+    ns1:termType ns1:Literal .
+
+<http://mapping.example.com/pm_2> a ns1:PredicateMap ;
+    ns1:constant <http://example.com/complementary> .
+
+<http://mapping.example.com/pm_5> a ns1:PredicateMap ;
+    ns1:constant <http://example.com/origin> .
+
+<http://mapping.example.com/pom_2> a ns1:PredicateObjectMap ;
+    ns1:objectMap <http://mapping.example.com/om_2> ;
+    ns1:predicateMap <http://mapping.example.com/pm_2> .
+
+<http://mapping.example.com/pom_5> a ns1:PredicateObjectMap ;
+    ns1:objectMap <http://mapping.example.com/om_5> ;
+    ns1:predicateMap <http://mapping.example.com/pm_5> .
+
+<http://mapping.example.com/s_0> a ns1:SubjectMap ;
+    ns1:template "http://example.com/Color/{name}" .
+
+<http://mapping.example.com/s_1> a ns1:SubjectMap ;
+    ns1:template "http://example.com/Fruit/{name}" .
+
+<http://mapping.example.com/source_0> a ns2:LogicalSource ;
+    ns2:referenceFormulation <http://semweb.mmlab.be/ns/ql#CSV> ;
+    ns2:source "colors.csv" .
+
+<http://mapping.example.com/source_1> a ns2:LogicalSource ;
+    ns2:referenceFormulation <http://semweb.mmlab.be/ns/ql#CSV> ;
+    ns2:source "fruits.csv" .
+

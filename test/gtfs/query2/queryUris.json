@@ -1,0 +1,28 @@
+{
+  "route": {
+    "uris": [
+      "http://vocab.gtfs.org/terms#longName"
+    ],
+    "fullTM": false
+  },
+  "trip": {
+    "uris": [
+      "http://vocab.gtfs.org/terms#route"
+    ],
+    "fullTM": false
+  },
+  "stopTime": {
+    "uris": [
+      "http://vocab.gtfs.org/terms#trip",
+      "http://vocab.gtfs.org/terms#stop"
+    ],
+    "fullTM": false
+  },
+  "stop": {
+    "uris": [
+      "http://xmlns.com/foaf/0.1/name",
+      "http://vocab.gtfs.org/terms#wheelchairAccessible"
+    ],
+    "fullTM": false
+  }
+}

@@ -2,8 +2,23 @@
   "queryType": "SELECT",
   "variables": [
     {
-      "termType": "Wildcard",
-      "value": "*"
+      "termType": "Variable",
+      "value": "longName"
+    },
+    {
+      "expression": {
+        "expression": {
+          "termType": "Variable",
+          "value": "name"
+        },
+        "type": "aggregate",
+        "aggregation": "count",
+        "distinct": false
+      },
+      "variable": {
+        "termType": "Variable",
+        "value": "count"
+      }
     }
   ],
   "where": [
@@ -13,34 +28,100 @@
         {
           "subject": {
             "termType": "Variable",
-            "value": "fruit"
+            "value": "route"
           },
           "predicate": {
             "termType": "NamedNode",
-            "value": "http://example.com/origin"
+            "value": "http://vocab.gtfs.org/terms#longName"
           },
           "object": {
             "termType": "Variable",
-            "value": "origin"
+            "value": "longName"
           }
         },
         {
           "subject": {
             "termType": "Variable",
-            "value": "color"
+            "value": "trip"
           },
           "predicate": {
             "termType": "NamedNode",
-            "value": "http://example.com/complementary"
+            "value": "http://vocab.gtfs.org/terms#route"
           },
           "object": {
             "termType": "Variable",
-            "value": "complementary"
+            "value": "route"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "stopTime"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#trip"
+          },
+          "object": {
+            "termType": "Variable",
+            "value": "trip"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "stopTime"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#stop"
+          },
+          "object": {
+            "termType": "Variable",
+            "value": "stop"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "stop"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://xmlns.com/foaf/0.1/name"
+          },
+          "object": {
+            "termType": "Variable",
+            "value": "name"
+          }
+        },
+        {
+          "subject": {
+            "termType": "Variable",
+            "value": "stop"
+          },
+          "predicate": {
+            "termType": "NamedNode",
+            "value": "http://vocab.gtfs.org/terms#wheelchairAccessible"
+          },
+          "object": {
+            "termType": "NamedNode",
+            "value": "http://transport.linkeddata.es/resource/WheelchairBoardingStatus/1"
           }
         }
       ]
     }
   ],
   "type": "query",
-  "prefixes": {}
+  "prefixes": {
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "gtfs": "http://vocab.gtfs.org/terms#",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "dct": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "gtfsaccessible": "http://transport.linkeddata.es/resource/WheelchairBoardingStatus/",
+    "gtfslocation": "http://transport.linkeddata.es/resource/LocationType/"
+  }
 }
