@@ -35,8 +35,14 @@ class MappingSimplifier:
         self.g.parse(mapping, format="ttl")
 
     '''
-        Building a collection of regex to identify
-        the instantiated subjects of a query. 
+        Building a collection of REGEXs to identify
+        the instantiated subjects of a query.
+        1. Select the templates and the TM's URIS of each subject 
+        2. Build a regex of the subject's template replacing the referenced column annotation: {ColumnName}
+        with the regular expression: ([a-zA-Z0-9\-\_]+)
+        Example:
+         - Subject template: http://example.com/Subject/{colName}
+         - REGEX: http://example.com/Subjet/([a-zA-Z0-9\-\_]+)
     '''
     def __createSubjectRegexs(self):
         subjectTemplates = self.g.query("""
@@ -47,7 +53,7 @@ class MappingSimplifier:
         }
         """, initNs=defaultInitNs)
         for tm,s,template in subjectTemplates:
-            regex = str(re.sub(r'({[A-Za-z0-9_\-]+})','([a-zA-Z0-9]+)',str(template)))
+            regex = str(re.sub(r'({[A-Za-z0-9_\-]+})','([a-zA-Z0-9\-\_]+)',str(template)))
             self.subjectsRegex.append({'s':s,'tm':str(tm),'regex':regex})
 
     '''
