@@ -36,8 +36,9 @@ class Sparql:
             else:
                 result.update(self.__extractTriplePatternUris(result, el))
         self.uris = result
+        
 
-    def __extractTriplePatternUris(self, result, el):
+    def ___extractTriplePatternUris(self, result, el):
         if('triples' in el.keys()):
             for tm in el['triples']:
                 subject = tm['subject']['value']
@@ -60,6 +61,16 @@ class Sparql:
                 else:
                     result[subject]['fullTM'] = True
         return result
+    def __extractTriplePatternUris(self, result, el):
+        if('triples' in el.keys()):
+            for tm in el['triples']:
+                subject = tm['subject']
+                predicate = tm['predicate']
+                _object = tm['object']
+                if(subject["value"] not in result.keys()):
+                    result[subject["value"]] = {'tpos':[],'includeInstantiation':False, 'fullTM':False}
+                result[subject["value"]]['tpos'].append({'s':subject, 'p':predicate, 'o':_object})
+        return result        
 
     def __splitQueryIntoTpos(self, tpos, tpoType="mandatory"):
         createSbuject = lambda subject: {"subjectVar":subject, "mandatory":{"predicates":[], "objects":[]}, "optional":{"predicates":[], "objects":[]}, "filter":[]}

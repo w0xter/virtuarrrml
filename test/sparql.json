@@ -2,23 +2,8 @@
   "queryType": "SELECT",
   "variables": [
     {
-      "termType": "Variable",
-      "value": "longName"
-    },
-    {
-      "expression": {
-        "expression": {
-          "termType": "Variable",
-          "value": "name"
-        },
-        "type": "aggregate",
-        "aggregation": "count",
-        "distinct": false
-      },
-      "variable": {
-        "termType": "Variable",
-        "value": "count"
-      }
+      "termType": "Wildcard",
+      "value": "*"
     }
   ],
   "where": [
@@ -27,86 +12,30 @@
       "triples": [
         {
           "subject": {
-            "termType": "Variable",
-            "value": "route"
+            "termType": "NamedNode",
+            "value": "http://example.com/Color/yellow"
           },
           "predicate": {
-            "termType": "NamedNode",
-            "value": "http://vocab.gtfs.org/terms#longName"
+            "termType": "Variable",
+            "value": "p"
           },
           "object": {
             "termType": "Variable",
-            "value": "longName"
+            "value": "o"
           }
         },
         {
           "subject": {
-            "termType": "Variable",
-            "value": "trip"
+            "termType": "NamedNode",
+            "value": "http://example.com/Color/yellow"
           },
           "predicate": {
             "termType": "NamedNode",
-            "value": "http://vocab.gtfs.org/terms#route"
-          },
-          "object": {
-            "termType": "Variable",
-            "value": "route"
-          }
-        },
-        {
-          "subject": {
-            "termType": "Variable",
-            "value": "stopTime"
-          },
-          "predicate": {
-            "termType": "NamedNode",
-            "value": "http://vocab.gtfs.org/terms#trip"
-          },
-          "object": {
-            "termType": "Variable",
-            "value": "trip"
-          }
-        },
-        {
-          "subject": {
-            "termType": "Variable",
-            "value": "stopTime"
-          },
-          "predicate": {
-            "termType": "NamedNode",
-            "value": "http://vocab.gtfs.org/terms#stop"
-          },
-          "object": {
-            "termType": "Variable",
-            "value": "stop"
-          }
-        },
-        {
-          "subject": {
-            "termType": "Variable",
-            "value": "stop"
-          },
-          "predicate": {
-            "termType": "NamedNode",
-            "value": "http://xmlns.com/foaf/0.1/name"
+            "value": "http://example.com/name"
           },
           "object": {
             "termType": "Variable",
             "value": "name"
-          }
-        },
-        {
-          "subject": {
-            "termType": "Variable",
-            "value": "stop"
-          },
-          "predicate": {
-            "termType": "NamedNode",
-            "value": "http://vocab.gtfs.org/terms#wheelchairAccessible"
-          },
-          "object": {
-            "termType": "NamedNode",
-            "value": "http://transport.linkeddata.es/resource/WheelchairBoardingStatus/1"
           }
         }
       ]
@@ -114,14 +43,6 @@
   ],
   "type": "query",
   "prefixes": {
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "foaf": "http://xmlns.com/foaf/0.1/",
-    "gtfs": "http://vocab.gtfs.org/terms#",
-    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
-    "dct": "http://purl.org/dc/terms/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "gtfsaccessible": "http://transport.linkeddata.es/resource/WheelchairBoardingStatus/",
-    "gtfslocation": "http://transport.linkeddata.es/resource/LocationType/"
+    "ex": "http://example.com/"
   }
 }
