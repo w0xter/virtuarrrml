@@ -1,2 +1,2 @@
-PyYaml==5.1
+PyYaml==5.4
 rdflib==5.0.0
